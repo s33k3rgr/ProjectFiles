@@ -31,7 +31,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="/home/vaios/Qt/5.3/gcc_64/include" />
+			<Add directory="/home/vaios/Qt/5.3/gcc_64/include/QtGui" />
+			<Add directory="/home/vaios/Qt/5.3/gcc_64/include/QtWidgets" />
 		</Compiler>
+		<Linker>
+			<Add library="Qt5Gui" />
+			<Add library="Qt5Core" />
+			<Add library="Qt5OpenGL" />
+			<Add directory="/home/vaios/Qt/5.3/gcc_64/lib" />
+		</Linker>
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

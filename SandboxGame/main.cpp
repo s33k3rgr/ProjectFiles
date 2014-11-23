@@ -1,7 +1,11 @@
+#include <QCoreApplication>
 
+using namespace std;
 
-int main()
+int main(int argc, char **argv)
 {
-
-    return 0;
+    QCoreApplication a(argc, argv);
+    return a.exec();
 }
+
+
