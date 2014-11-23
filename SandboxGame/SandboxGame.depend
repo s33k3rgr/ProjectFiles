@@ -656,7 +656,7 @@
 1410443280 /home/vaios/Qt/5.3/gcc_64/include/QtWidgets/QWidget
 	"qwidget.h"
 
-1416772790 /home/vaios/Desktop/MyEngine/ProjectFiles/SandboxGame/include/MyGlWindow.h
+1416777185 /home/vaios/Desktop/MyEngine/ProjectFiles/SandboxGame/include/MyGlWindow.h
 	<QtOpenGL/QGLWidget>
 	<QTimer>
 
@@ -769,4 +769,9 @@
 	<inttypes.h>
 	<OpenGL/glu.h>
 	<GL/glu.h>
+
+1416778753 source:/home/vaios/Desktop/MyEngine/ProjectFiles/SandboxGame/src/MyGlWindow_moc.cpp
+	"/home/vaios/Desktop/MyEngine/ProjectFiles/SandboxGame/include/MyGlWindow.h"
+	<QtCore/qbytearray.h>
+	<QtCore/qmetatype.h>
 

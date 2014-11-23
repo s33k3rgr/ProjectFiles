@@ -20,10 +20,10 @@ void MyGlWindow::initializeGL()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verts),
 		verts, GL_STATIC_DRAW);
 
-	//connect(&myTimer, SIGNAL(timeout()),
-	//	this, SLOT(myUpdate()));
+	connect(&myTimer, SIGNAL(timeout()),
+		this, SLOT(myUpdate()));
 
-//	myTimer.start(0);
+	myTimer.start(0);
 
 
 }
@@ -40,7 +40,7 @@ void MyGlWindow::paintGL()
 }
 
 
-//void MyGlWindow::myUpdate()
-//{
-//
-//}
+void MyGlWindow::myUpdate()
+{
+
+}
