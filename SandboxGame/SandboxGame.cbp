@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -42,9 +44,16 @@
 			<Add library="Qt5Gui" />
 			<Add library="Qt5Core" />
 			<Add library="Qt5OpenGL" />
+			<Add library="Qt5Widgets" />
+			<Add library="GLEW" />
+			<Add library="GL" />
+			<Add library="GLU" />
 			<Add directory="/home/vaios/Qt/5.3/gcc_64/lib" />
+			<Add directory="/usr/lib" />
 		</Linker>
+		<Unit filename="include/MyGlWindow.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/MyGlWindow.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

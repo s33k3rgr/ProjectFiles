@@ -1,13 +1,14 @@
 #include <QApplication>
 #include <QWidget>
+#include "MyGlWindow.h"
 
 using namespace std;
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QWidget myWidget;
-    myWidget.show();
+    MyGlWindow myGlWindow;
+    myGlWindow.show();
     return a.exec();
 }
 
