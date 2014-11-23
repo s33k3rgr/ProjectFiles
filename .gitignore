@@ -30,3 +30,8 @@
 # Temporary file
 *~
 *log
+
+# Directories
+bin/
+obj/
+
