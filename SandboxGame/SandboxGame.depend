@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
-1416756672 source:/home/vaios/Desktop/MyEngine/ProjectFiles/SandboxGame/main.cpp
+1416765950 source:/home/vaios/Desktop/MyEngine/ProjectFiles/SandboxGame/main.cpp
 	<QCoreApplication>
-	<QApplication>
+	<QWidget>
 
 1410443280 /home/vaios/Qt/5.3/gcc_64/include/QtWidgets/QApplication
 	"qapplication.h"
@@ -651,4 +651,7 @@
 
 1410443280 /home/vaios/Qt/5.3/gcc_64/include/QtCore/QCoreApplication
 	"qcoreapplication.h"
+
+1410443280 /home/vaios/Qt/5.3/gcc_64/include/QtWidgets/QWidget
+	"qwidget.h"
 
