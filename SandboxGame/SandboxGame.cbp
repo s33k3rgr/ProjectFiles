@@ -54,6 +54,7 @@
 		<Unit filename="include/MyGlWindow.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/MyGlWindow.cpp" />
+		<Unit filename="src/MyGlWindow_moc.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

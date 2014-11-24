@@ -3,6 +3,7 @@
 #include "MyGlWindow.h"
 
 
+
 static float verts[] =
 {
 	+0.0f, +0.5f,
