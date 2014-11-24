@@ -39,6 +39,7 @@
 			<Add directory="/home/vaios/Qt/5.3/gcc_64/include/QtGui" />
 			<Add directory="/home/vaios/Qt/5.3/gcc_64/include/QtWidgets" />
 			<Add directory="/home/vaios/Qt/5.3/gcc_64/include/QtCore" />
+			<Add directory="../Engine" />
 		</Compiler>
 		<Linker>
 			<Add library="Qt5Gui" />

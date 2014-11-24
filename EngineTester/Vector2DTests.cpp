@@ -27,7 +27,6 @@ TEST(Vector2D, VectorAddition)
 
 }
 
-
 TEST(Vector2D, ScalarMultiplication)
 {
 	Vector2D vec(-7, 3);

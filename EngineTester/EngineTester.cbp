@@ -5,6 +5,7 @@
 		<Option title="EngineTester" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="Tests/;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/EngineTester" prefix_auto="1" extension_auto="1" />
@@ -35,10 +36,17 @@
 			<Add option="-pthread" />
 			<Add directory="../Middleware/gtest" />
 			<Add directory="../Engine" />
+			<Add directory="/home/vaios/Qt/5.3/gcc_64/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-lpthread" />
 		</Linker>
+		<Unit filename="ClockTests.cpp">
+			<Option virtualFolder="Tests/" />
+		</Unit>
+		<Unit filename="Vector2DTests.cpp">
+			<Option virtualFolder="Tests/" />
+		</Unit>
 		<Unit filename="gtest-all.cc" />
 		<Unit filename="main.cpp" />
 		<Extensions>
