@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <Clock.h>
-#include <QtTest/QTest>
+#include <unistd.h>
 
 using Timing::Clock;
 
@@ -15,12 +15,12 @@ TEST(Clock, FrameTimeMeasuring)
 {
 	Clock clock;
 	EXPECT_TRUE(clock.initialize());
-	QTest::qSleep(1000);
+	usleep(1000000);    //Sleep for one second
 	clock.newFrame();
 	float timedTime  = clock.timeElapsedLastFrame();
 	EXPECT_TRUE(0.9f < timedTime && timedTime < 1.1f);
 	clock.newFrame();
-	QTest::qSleep(500);
+	usleep(500000);
 	clock.newFrame();
 	timedTime = clock.timeElapsedLastFrame();
 	EXPECT_TRUE(0.4f < timedTime && timedTime < 0.6f);
@@ -32,7 +32,7 @@ TEST(Clock, FrameTimeMeasuring)
 		int thisTestTimeMilliseconds = rand() % 10000;
 		float thisTestTimeSeconds = thisTestTimeMilliseconds / 1000.0f;
 		clock.newFrame();
-		QTest::qSleep(thisTestTimeMilliseconds);
+		usleep(thisTestTimeMilliseconds * 1000);
 		clock.newFrame();
 		float elapsedSeconds = clock.timeElapsedLastFrame();
 		EXPECT_TRUE((thisTestTimeSeconds - THRESHOLD) < elapsedSeconds);

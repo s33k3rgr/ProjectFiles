@@ -34,12 +34,16 @@
 			<Add option="-Wall" />
 			<Add option="-g" />
 			<Add option="-pthread" />
+			<Add option="-fPIC" />
+			<Add option="-fPIE" />
 			<Add directory="../Middleware/gtest" />
 			<Add directory="../Engine" />
 			<Add directory="/home/vaios/Qt/5.3/gcc_64/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-lpthread" />
+			<Add library="Engine" />
+			<Add directory="../Engine/bin/Debug" />
 		</Linker>
 		<Unit filename="ClockTests.cpp">
 			<Option virtualFolder="Tests/" />
