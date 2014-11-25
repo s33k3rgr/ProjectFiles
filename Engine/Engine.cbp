@@ -32,6 +32,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add option="-fPIC" />
 		</Compiler>
 		<Unit filename="Clock.cpp">
 			<Option virtualFolder="Timing/" />

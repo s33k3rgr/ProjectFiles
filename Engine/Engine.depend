@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
 1416660832 source:/home/vaios/Desktop/MyEngine/ProjectFiles/Engine/main.cpp
 
-1416850649 source:/home/vaios/Desktop/MyEngine/ProjectFiles/Engine/Clock.cpp
+1416935934 source:/home/vaios/Desktop/MyEngine/ProjectFiles/Engine/Clock.cpp
 	"Clock.h"
 
-1416866038 /home/vaios/Desktop/MyEngine/ProjectFiles/Engine/Clock.h
+1416935900 /home/vaios/Desktop/MyEngine/ProjectFiles/Engine/Clock.h
+	<sys/time.h>
 

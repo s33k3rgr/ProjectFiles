@@ -54,7 +54,7 @@ public:
         #endif
     }
 
-protected:
+
     #ifdef WIN32
     LARGE_INTEGER m_CounterFrequency;
     LARGE_INTEGER m_LastCount;

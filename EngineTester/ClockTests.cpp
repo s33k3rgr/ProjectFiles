@@ -26,7 +26,7 @@ TEST(Clock, FrameTimeMeasuring)
 	EXPECT_TRUE(0.4f < timedTime && timedTime < 0.6f);
 
 	const int NUM_TESTS = 10 + rand() % 100;
-	const float THRESHOLD = 0.1f;
+	const float THRESHOLD = 0.01f;
 	for (int i = 0; i < NUM_TESTS; i++)
 	{
 		int thisTestTimeMilliseconds = rand() % 10000;
