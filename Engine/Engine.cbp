@@ -40,6 +40,12 @@
 		<Unit filename="Clock.h">
 			<Option virtualFolder="Timing/" />
 		</Unit>
+		<Unit filename="Matrix2D.h">
+			<Option virtualFolder="Math/" />
+		</Unit>
+		<Unit filename="Matrix2D.inl">
+			<Option virtualFolder="Math/" />
+		</Unit>
 		<Unit filename="StopWatch.h">
 			<Option virtualFolder="Timing/" />
 		</Unit>

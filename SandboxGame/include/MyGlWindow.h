@@ -13,8 +13,6 @@ protected:
 	void initializeGL();
 	void paintGL();
 	void keyPressEvent(QKeyEvent*);
-
-
 private slots:
 	void myUpdate();
 	void UpdateVelocity();

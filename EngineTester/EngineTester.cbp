@@ -49,6 +49,12 @@
 		<Unit filename="ClockTests.cpp">
 			<Option virtualFolder="Tests/" />
 		</Unit>
+		<Unit filename="HelperFunctions.h">
+			<Option virtualFolder="Tests/" />
+		</Unit>
+		<Unit filename="Matrix2DTests.cpp">
+			<Option virtualFolder="Tests/" />
+		</Unit>
 		<Unit filename="Vector2DTests.cpp">
 			<Option virtualFolder="Tests/" />
 		</Unit>
