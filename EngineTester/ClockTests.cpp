@@ -24,7 +24,7 @@ TEST(Clock, FrameTimeMeasuring)
 	clock.newFrame();
 	timedTime = clock.timeElapsedLastFrame();
 	EXPECT_TRUE(0.4f < timedTime && timedTime < 0.6f);
-
+#ifdef OVERNIGHT_TESTS
 	const int NUM_TESTS = 10 + rand() % 100;
 	const float THRESHOLD = 0.01f;
 	for (int i = 0; i < NUM_TESTS; i++)
@@ -39,7 +39,7 @@ TEST(Clock, FrameTimeMeasuring)
 		EXPECT_TRUE((thisTestTimeSeconds + THRESHOLD) > elapsedSeconds);
 	}
 
-
+#endif // OVERNIGHT_TESTS
 	clock.newFrame();
 	clock.timeElapsedLastFrame();
 	EXPECT_TRUE(clock.shutdown());
