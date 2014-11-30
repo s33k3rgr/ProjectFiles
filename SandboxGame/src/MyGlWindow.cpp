@@ -1,33 +1,33 @@
 #include <GL/glew.h>
 #include "MyGlWindow.h"
 #include <cassert>
-#include <Vector2D.h>
-#include <Matrix2D.h>
+#include <Vector3D.h>
+#include <Matrix3D.h>
 #include <Clock.h>
 #include <QKeyEvent>
 
-using Math::Vector2D;
-using Math::Matrix2D;
-using namespace std;
+using Math::Matrix3D;
+using Math::Vector3D;
+
 
 namespace
 {
 
-	Vector2D verts[] =
-{
-	Vector2D(+0.0f, +0.141421f),
-	Vector2D(-0.1f, -0.1f),
-	Vector2D(+0.1f, -0.1f),
-};
+    Vector3D verts[] =
+    {
+        Vector3D(+0.0f, +0.14142135623f, 1.0f),
+        Vector3D(-0.1f, -0.1f, 1.0f),
+        Vector3D(+0.1f, -0.1f, 1.0f),
+    };
 
 	const unsigned int NUM_VERTS = sizeof(verts) / sizeof(*verts);
-	Vector2D shipPosition;
-	Vector2D shipVelocity;
+	Vector3D shipPosition;
+	Vector3D shipVelocity;
 	float shipOrientation = 0.0f;
 	Timing::Clock clock1;
 	float ACCELERATION;
 	float ANGULAR_MOVEMENT = 0.3f;
-	Vector2D directionToAccelerate;
+	Vector3D directionToAccelerate;
 }
 
 void MyGlWindow::initializeGL()
@@ -49,19 +49,21 @@ void MyGlWindow::initializeGL()
 void MyGlWindow::paintGL()
 {
 	int minSize = std::min(width(), height());
-	Vector2D viewportLocation;
+	Vector3D viewportLocation;
 	viewportLocation.x = width() / 2 - minSize / 2;
 	viewportLocation.y = height() / 2 - minSize / 2;
 	glViewport(viewportLocation.x, viewportLocation.y,
 		minSize, minSize);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	Vector2D transformedVerts[NUM_VERTS];
-	Matrix2D op = Matrix2D::rotate(shipOrientation);
+	Vector3D transformedVerts[NUM_VERTS];
+	Matrix3D op =
+		Matrix3D::translate(shipPosition.x, shipPosition.y) *
+		Matrix3D::rotateZ(shipOrientation);
 	for(unsigned int i = 0; i < NUM_VERTS; i++)
-		transformedVerts[i] = shipPosition + (op * verts[i]);
+		transformedVerts[i] = op * verts[i];
 
 	glBufferSubData(
 		GL_ARRAY_BUFFER, 0,
@@ -107,5 +109,5 @@ void MyGlWindow::keyPressEvent(QKeyEvent* e)
 void MyGlWindow::UpdateVelocity()
 {
 	ACCELERATION = 0.4f * clock1.timeElapsedLastFrame();
-	directionToAccelerate = Vector2D(-sin(shipOrientation), cos(shipOrientation));
+	directionToAccelerate = Vector3D(-sin(shipOrientation), cos(shipOrientation));
 }

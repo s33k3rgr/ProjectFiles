@@ -1,4 +1,3 @@
-#define _USE_MATH_DEFINES
 #include <Matrix2D.h>
 #include <cmath>
 #include <gtest/gtest.h>
