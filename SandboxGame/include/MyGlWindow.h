@@ -16,6 +16,10 @@ protected:
 private slots:
 	void myUpdate();
 	void UpdateVelocity();
+private:
+    void update();
+    void draw();
+    void doGl();
 public:
 	bool initialize();
 	bool shutdown();

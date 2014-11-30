@@ -4,7 +4,7 @@
 
 namespace Profiling
 {
-	Profile::Profile(const char* category) : 
+	Profile::Profile(const char* category) :
 	category(category)
 	{
 		clock.initialize();

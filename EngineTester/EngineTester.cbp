@@ -37,6 +37,7 @@
 			<Add option="-fPIC" />
 			<Add option="-fPIE" />
 			<Add option="-DnoOVERNIGHT_TESTS" />
+			<Add option="-DPROFILING_ON" />
 			<Add directory="../Middleware/gtest" />
 			<Add directory="../Engine" />
 			<Add directory="/home/vaios/Qt/5.3/gcc_64/include" />
@@ -55,7 +56,16 @@
 		<Unit filename="Matrix2DTests.cpp">
 			<Option virtualFolder="Tests/" />
 		</Unit>
+		<Unit filename="Matrix3DTests.cpp">
+			<Option virtualFolder="Tests/" />
+		</Unit>
+		<Unit filename="ProfileTests.cpp">
+			<Option virtualFolder="Tests/" />
+		</Unit>
 		<Unit filename="Vector2DTests.cpp">
+			<Option virtualFolder="Tests/" />
+		</Unit>
+		<Unit filename="Vector3DTests.cpp">
 			<Option virtualFolder="Tests/" />
 		</Unit>
 		<Unit filename="gtest-all.cc" />

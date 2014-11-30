@@ -5,9 +5,13 @@
 #include <Matrix3D.h>
 #include <Clock.h>
 #include <QKeyEvent>
+#include <Profile.h>
+#include <Profiler.h>
+#include "TypeDefs.h"
 
 using Math::Matrix3D;
 using Math::Vector3D;
+using je::uint;
 
 
 namespace
@@ -20,7 +24,8 @@ namespace
         Vector3D(+0.1f, -0.1f, 1.0f),
     };
 
-	const unsigned int NUM_VERTS = sizeof(verts) / sizeof(*verts);
+	const uint NUM_VERTS = sizeof(verts) / sizeof(*verts);
+	Vector3D transformedVerts[NUM_VERTS];
 	Vector3D shipPosition;
 	Vector3D shipVelocity;
 	float shipOrientation = 0.0f;
@@ -46,52 +51,91 @@ void MyGlWindow::initializeGL()
 }
 
 
-void MyGlWindow::paintGL()
+
+void MyGlWindow::doGl()
 {
-	int minSize = std::min(width(), height());
+    // Setup Viewport
+    int minSize = std::min(width(), height());
 	Vector3D viewportLocation;
 	viewportLocation.x = width() / 2 - minSize / 2;
 	viewportLocation.y = height() / 2 - minSize / 2;
 	glViewport(viewportLocation.x, viewportLocation.y,
 		minSize, minSize);
+
+	// Setup data pointers
 	glClear(GL_COLOR_BUFFER_BIT);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	Vector3D transformedVerts[NUM_VERTS];
-	Matrix3D op =
-		Matrix3D::translate(shipPosition.x, shipPosition.y) *
-		Matrix3D::rotateZ(shipOrientation);
-	for(unsigned int i = 0; i < NUM_VERTS; i++)
-		transformedVerts[i] = op * verts[i];
-
+    // Send data to OpenGL
 	glBufferSubData(
 		GL_ARRAY_BUFFER, 0,
 		sizeof(transformedVerts),
 		transformedVerts);
 
+	// Draw
 	glDrawArrays(GL_TRIANGLES, 0, 3);
-
 }
+
+
+
+void MyGlWindow::draw()
+{
+	Matrix3D op;
+	Matrix3D translator = Matrix3D::translate(shipPosition.x, shipPosition.y);
+	Matrix3D rotator = Matrix3D::rotateZ(shipOrientation);
+
+	{
+	    PROFILE("Matrix Multiplication");
+	    op = translator * rotator;
+	}
+
+	{
+	    PROFILE("Transformation");
+	    for(uint i = 0; i < NUM_VERTS; i++)
+            transformedVerts[i] = op * verts[i];
+	}
+    doGl();
+}
+
+
+void MyGlWindow::paintGL()
+{
+	update();
+	draw();
+}
+
+
+void MyGlWindow::update()
+{
+    clock1.lap();
+	profiler.newFrame();
+	UpdateVelocity();
+	shipPosition += shipVelocity * clock1.lastLapTime();
+}
+
 
 
 void MyGlWindow::myUpdate()
 {
-	clock1.lap();
-	UpdateVelocity();
-	shipPosition += shipVelocity * clock1.lastLapTime();
-	repaint();
+    repaint();
 }
 
 
 bool MyGlWindow::shutdown()
 {
-	return clock1.shutdown();
+	bool ret = true;
+	profiler.shutdown();
+	ret &= clock1.shutdown();
+	return ret;
 }
 
 bool MyGlWindow::initialize()
 {
-	return clock1.initialize();
+	bool ret = true;
+	profiler.initialize("profiles.csv");
+	ret &= clock1.initialize();
+	return ret;
 }
 
 

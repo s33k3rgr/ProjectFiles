@@ -5,6 +5,7 @@
 #include <string.h>
 #endif
 
+
 using je::uint;
 
 namespace Profiling

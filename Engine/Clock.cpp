@@ -19,7 +19,6 @@ namespace Timing
 	{
 	   stop();
 	   start();
-
 	}
 
 
