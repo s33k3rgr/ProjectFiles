@@ -77,9 +77,9 @@ void MyGlWindow::paintGL()
 
 void MyGlWindow::myUpdate()
 {
-	clock1.newFrame();
+	clock1.lap();
 	UpdateVelocity();
-	shipPosition += shipVelocity * clock1.timeElapsedLastFrame();
+	shipPosition += shipVelocity * clock1.lastLapTime();
 	repaint();
 }
 
@@ -108,6 +108,6 @@ void MyGlWindow::keyPressEvent(QKeyEvent* e)
 
 void MyGlWindow::UpdateVelocity()
 {
-	ACCELERATION = 0.4f * clock1.timeElapsedLastFrame();
+	ACCELERATION = 0.4f * clock1.lastLapTime();
 	directionToAccelerate = Vector3D(-sin(shipOrientation), cos(shipOrientation));
 }

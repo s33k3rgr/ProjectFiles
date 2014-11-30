@@ -36,3 +36,6 @@ bin/
 obj/
 Middleware/
 
+# Profiler files
+*.csv
+

@@ -16,13 +16,13 @@ TEST(Clock, FrameTimeMeasuring)
 	Clock clock;
 	EXPECT_TRUE(clock.initialize());
 	usleep(1000000);    //Sleep for one second
-	clock.newFrame();
-	float timedTime  = clock.timeElapsedLastFrame();
+	clock.lap();
+	float timedTime  = clock.lastLapTime();
 	EXPECT_TRUE(0.9f < timedTime && timedTime < 1.1f);
-	clock.newFrame();
+	clock.lap();
 	usleep(500000);
-	clock.newFrame();
-	timedTime = clock.timeElapsedLastFrame();
+	clock.lap();
+	timedTime = clock.lastLapTime();
 	EXPECT_TRUE(0.4f < timedTime && timedTime < 0.6f);
 #ifdef OVERNIGHT_TESTS
 	const int NUM_TESTS = 10 + rand() % 100;
@@ -31,16 +31,16 @@ TEST(Clock, FrameTimeMeasuring)
 	{
 		int thisTestTimeMilliseconds = rand() % 10000;
 		float thisTestTimeSeconds = thisTestTimeMilliseconds / 1000.0f;
-		clock.newFrame();
+		clock.lap();
 		usleep(thisTestTimeMilliseconds * 1000);
-		clock.newFrame();
-		float elapsedSeconds = clock.timeElapsedLastFrame();
+		clock.lap();
+		float elapsedSeconds = clock.lastLapTime();
 		EXPECT_TRUE((thisTestTimeSeconds - THRESHOLD) < elapsedSeconds);
 		EXPECT_TRUE((thisTestTimeSeconds + THRESHOLD) > elapsedSeconds);
 	}
 
 #endif // OVERNIGHT_TESTS
-	clock.newFrame();
-	clock.timeElapsedLastFrame();
+	clock.lap();
+
 	EXPECT_TRUE(clock.shutdown());
 }

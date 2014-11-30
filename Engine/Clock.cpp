@@ -6,7 +6,7 @@ namespace Timing
 	bool  Clock::initialize()
 	{
 
-		return ( gettimeofday(&timeLastFrame, 0) == 0 );
+		return ( gettimeofday(&lastStartTime, 0) == 0 );
 	}
 
 	bool  Clock::shutdown()
@@ -15,20 +15,35 @@ namespace Timing
 	}
 
 
-	void  Clock::newFrame()
+	void  Clock::lap()
 	{
-	    timeval thisTime;
-        gettimeofday(&thisTime, 0);
-        float fSeconds = (float)(thisTime.tv_sec - timeLastFrame.tv_sec);
-        float fFraction = (float)(thisTime.tv_usec - timeLastFrame.tv_usec) * 0.000001f;
-        deltaTime = fSeconds + fFraction;
-        timeLastFrame = thisTime;
+	   stop();
+	   start();
+
 	}
 
 
-	float Clock::timeElapsedLastFrame() const
+	float Clock::lastLapTime() const
 	{
 		return deltaTime;
 	}
+
+
+	void Clock::start()
+	{
+        gettimeofday(&lastStartTime, 0);
+	}
+
+
+    void Clock::stop()
+    {
+        timeval thisTime;
+        gettimeofday(&thisTime, 0);
+        float fSeconds = (float)(thisTime.tv_sec - lastStartTime.tv_sec);
+        float fFraction = (float)(thisTime.tv_usec - lastStartTime.tv_usec) * 0.000001f;
+        deltaTime = fSeconds + fFraction;
+        lastStartTime = thisTime;
+    }
+
 
 }

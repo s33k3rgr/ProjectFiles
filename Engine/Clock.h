@@ -7,13 +7,17 @@ namespace Timing
 	class Clock
 	{
 	    timeval timeFrequency;
-		timeval timeLastFrame;
+		timeval lastStartTime;
 		float deltaTime;
 	public:
 		bool initialize();
 		bool shutdown();
-		void newFrame();
-		float timeElapsedLastFrame() const;
+		void start();
+		void stop();
+		//void newFrame();
+		void lap();
+		//float timeElapsedLastFrame() const;
+		float lastLapTime() const;
 	};
 }
 
