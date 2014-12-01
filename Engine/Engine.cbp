@@ -47,6 +47,12 @@
 		<Unit filename="Matrix2D.inl">
 			<Option virtualFolder="Math/" />
 		</Unit>
+		<Unit filename="Matrix2DH.h">
+			<Option virtualFolder="Math/" />
+		</Unit>
+		<Unit filename="Matrix2DH.inl">
+			<Option virtualFolder="Math/" />
+		</Unit>
 		<Unit filename="Matrix3D.h">
 			<Option virtualFolder="Math/" />
 		</Unit>

@@ -17,16 +17,31 @@ using je::uint;
 namespace
 {
 
-    Vector3D verts[] =
-    {
-        Vector3D(+0.0f, +0.14142135623f, 1.0f),
-        Vector3D(-0.1f, -0.1f, 1.0f),
-        Vector3D(+0.1f, -0.1f, 1.0f),
-    };
+    Vector3D shipVerts[] =
+	{
+		Vector3D(+0.0f, +0.14142135623f, 1),
+		Vector3D(-0.1f, -0.1f, 1),
+		Vector3D(+0.1f, -0.1f, 1)
+	};
 
-	const uint NUM_VERTS = sizeof(verts) / sizeof(*verts);
-	Vector3D transformedVerts[NUM_VERTS];
+    Vector3D boundaryVerts[] =
+	{
+		Vector3D(+0.0f, +1.0f, +0.0f),
+		Vector3D(-1.0f, +0.0f, +0.0f),
+		Vector3D(+0.0f, -1.0f, +0.0f),
+		Vector3D(+1.0f, +0.0f, +0.0f)
+	};
+
+	GLushort  boundaryIndices[] = {0, 1, 1, 2, 2, 3, 3, 0} ;
+
+	const uint NUM_SHIP_VERTS = sizeof(shipVerts) / sizeof(*shipVerts);
+	const uint NUM_BOUNDARY_VERTS = sizeof(boundaryVerts) / sizeof(*boundaryVerts);
+	GLuint shipVertexBufferID;
+	GLuint boundaryVertexBufferID;
+	GLuint boundaryIndexBufferID;
+	Vector3D transformedVerts[NUM_SHIP_VERTS];
 	Vector3D shipPosition;
+	Vector3D oldShipPosition;
 	Vector3D shipVelocity;
 	float shipOrientation = 0.0f;
 	Timing::Clock clock1;
@@ -39,15 +54,27 @@ void MyGlWindow::initializeGL()
 {
 	GLenum errorCode = glewInit();
 	assert(errorCode == 0);
-	glGenBuffers(1, &vertexBufferID);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts),
+	glEnableVertexAttribArray(0);
+	glGenBuffers(1, &shipVertexBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, shipVertexBufferID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(shipVerts),
 		NULL, GL_DYNAMIC_DRAW);
+
+
+    glGenBuffers(1, &boundaryVertexBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, boundaryVertexBufferID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(boundaryVerts),
+		boundaryVerts, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &boundaryIndexBufferID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, boundaryIndexBufferID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(boundaryIndices),
+		boundaryIndices, GL_STATIC_DRAW);
 
 	connect(&myTimer, SIGNAL(timeout()),
 		this, SLOT(myUpdate()));
 
-	myTimer.start();
+	myTimer.start(0);
 }
 
 
@@ -55,26 +82,27 @@ void MyGlWindow::initializeGL()
 void MyGlWindow::doGl()
 {
     // Setup Viewport
-    int minSize = std::min(width(), height());
-	Vector3D viewportLocation;
-	viewportLocation.x = width() / 2 - minSize / 2;
-	viewportLocation.y = height() / 2 - minSize / 2;
-	glViewport(viewportLocation.x, viewportLocation.y,
-		minSize, minSize);
+	glViewport(0, 0, width(), height());
 
 	// Setup data pointers
 	glClear(GL_COLOR_BUFFER_BIT);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, shipVertexBufferID);
 
-    // Send data to OpenGL
+	// Send data to OpenGL
 	glBufferSubData(
 		GL_ARRAY_BUFFER, 0,
 		sizeof(transformedVerts),
 		transformedVerts);
 
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
 	// Draw
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	// Now draw the boundaries
+	glBindBuffer(GL_ARRAY_BUFFER, boundaryVertexBufferID);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawElements(GL_LINES, 8, GL_UNSIGNED_SHORT, 0);
 }
 
 
@@ -85,15 +113,23 @@ void MyGlWindow::draw()
 	Matrix2DH translator = Matrix2DH::translate(shipPosition.x, shipPosition.y);
 	Matrix2DH rotator = Matrix2DH::rotateZ(shipOrientation);
 
+	float aspectRatio = static_cast<float>(width()) / height();
+	Matrix2DH scale;
+
+	if(aspectRatio > 1)
+		scale = Matrix2DH::scale(1 / aspectRatio, 1);
+	else
+		scale = Matrix2DH::scale(1, aspectRatio);
+
 	{
 	    PROFILE("Matrix Multiplication");
-	    op = translator * rotator;
+	    op = translator * scale * rotator;
 	}
 
 	{
 	    PROFILE("Transformation");
-	    for(uint i = 0; i < NUM_VERTS; i++)
-            transformedVerts[i] = op * verts[i];
+	    for(uint i = 0; i < NUM_SHIP_VERTS; i++)
+            transformedVerts[i] = op * shipVerts[i];
 	}
     doGl();
 }
@@ -111,7 +147,9 @@ void MyGlWindow::update()
     clock1.lap();
 	profiler.newFrame();
 	UpdateVelocity();
+    oldShipPosition = shipPosition;
 	shipPosition += shipVelocity * clock1.lastLapTime();
+	handleBoundaries();
 }
 
 
@@ -154,4 +192,28 @@ void MyGlWindow::UpdateVelocity()
 {
 	ACCELERATION = 0.4f * clock1.lastLapTime();
 	directionToAccelerate = Vector3D(-sin(shipOrientation), cos(shipOrientation));
+}
+
+
+void MyGlWindow::handleBoundaries()
+{
+
+	for(uint i = 0; i < NUM_BOUNDARY_VERTS; i++)
+	{
+		const Vector3D& first = boundaryVerts[i];
+		const Vector3D& second = boundaryVerts[(i + 1) % NUM_BOUNDARY_VERTS];
+
+		Vector3D wall = second - first;
+		Vector3D normal = wall.perpCcwXy().normalized();
+		Vector3D respectiveShipPosition = shipPosition - first;
+		float dotResult = normal.dot(respectiveShipPosition);
+
+		if (dotResult < 0)
+		{
+			shipVelocity  = shipVelocity - 2 * shipVelocity.dot(normal) * normal;
+			shipPosition = oldShipPosition;
+		}
+
+	}
+
 }
