@@ -18,7 +18,15 @@ Matrix3D Matrix3D::translate(float x, float y)
 }
 
 
-inline Vector3D operator*(
+Matrix3D Matrix3D::scale(float x, float y)
+{
+	return Matrix3D(x, 0, 0,
+					0, y, 0,
+					0, 0, 1);
+}
+
+
+Vector3D operator*(
 	const Matrix3D& matrix,
 	const Vector3D& right)
 {
@@ -30,6 +38,15 @@ inline Vector3D operator*(
 }
 
 
+Matrix3D Matrix3D::rotateZ(float angleInRadians)
+{
+	float cosResult = cos(angleInRadians);
+	float sinResult = sin(angleInRadians);
+	return Matrix3D(
+		cosResult, -sinResult, 0,
+		sinResult, cosResult,  0,
+				0,		   0,  1);
+}
 
 Matrix3D operator*(
 		const Matrix3D& left,
@@ -48,15 +65,4 @@ Matrix3D operator*(
 		left.r2c0 * right.r0c1 + left.r2c1 * right.r1c1 + left.r2c2 * right.r2c1,
 		left.r2c0 * right.r0c2 + left.r2c1 * right.r1c2 + left.r2c2 * right.r2c2
 		);
-}
-
-
-Matrix3D Matrix3D::rotateZ(float angleInRadians)
-{
-	float cosResult = cos(angleInRadians);
-	float sinResult = sin(angleInRadians);
-	return Matrix3D(
-		cosResult, -sinResult, 0,
-		sinResult, cosResult,  0,
-				0,		   0,  1);
 }

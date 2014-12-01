@@ -16,12 +16,13 @@ namespace Math
 			float r2c0 = 0.0f,float r2c1 = 0.0f,float r2c2 = 1.0f);
 		inline static Matrix3D rotateZ(float angleInRadians);
 		inline static Matrix3D translate(float x, float y);
+		inline static Matrix3D scale(float x, float y);
 	};
 
 	inline Vector3D operator*(
 		const Matrix3D& matrix,
 		const Vector3D& right);
-    inline Matrix3D operator*(
+	inline Matrix3D operator*(
 		const Matrix3D& left,
 		const Matrix3D& right);
 

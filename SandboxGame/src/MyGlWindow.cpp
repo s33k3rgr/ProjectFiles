@@ -2,14 +2,14 @@
 #include "MyGlWindow.h"
 #include <cassert>
 #include <Vector3D.h>
-#include <Matrix3D.h>
+#include <Matrix2DH.h>
 #include <Clock.h>
 #include <QKeyEvent>
 #include <Profile.h>
 #include <Profiler.h>
 #include "TypeDefs.h"
 
-using Math::Matrix3D;
+using Math::Matrix2DH;
 using Math::Vector3D;
 using je::uint;
 
@@ -81,9 +81,9 @@ void MyGlWindow::doGl()
 
 void MyGlWindow::draw()
 {
-	Matrix3D op;
-	Matrix3D translator = Matrix3D::translate(shipPosition.x, shipPosition.y);
-	Matrix3D rotator = Matrix3D::rotateZ(shipOrientation);
+	Matrix2DH op;
+	Matrix2DH translator = Matrix2DH::translate(shipPosition.x, shipPosition.y);
+	Matrix2DH rotator = Matrix2DH::rotateZ(shipOrientation);
 
 	{
 	    PROFILE("Matrix Multiplication");
