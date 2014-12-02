@@ -210,10 +210,9 @@ void MyGlWindow::handleBoundaries()
 
 		if (dotResult < 0)
 		{
-			shipVelocity  = shipVelocity - 2 * shipVelocity.dot(normal) * normal;
+			shipVelocity  = shipVelocity - 2 * shipVelocity.projectOnto(normal);
 			shipPosition = oldShipPosition;
 		}
-
 	}
 
 }

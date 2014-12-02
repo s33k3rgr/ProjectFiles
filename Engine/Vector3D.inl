@@ -78,3 +78,9 @@ Vector3D Vector3D::projectOnto(const Vector3D& target) const
 {
 	return (this->dot(target) / target.magnitudeSquared()) * target;
 }
+
+
+Vector3D lerp(float alpha, const Vector3D& source, const Vector3D& target)
+{
+	return (1.0f - alpha) * source + alpha * target;
+}
