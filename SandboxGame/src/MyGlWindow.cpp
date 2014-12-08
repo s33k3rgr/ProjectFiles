@@ -34,6 +34,19 @@ namespace
 
 	GLushort  boundaryIndices[] = {0, 1, 1, 2, 2, 3, 3, 0} ;
 
+	Vector3D lerpPoints[] =
+	{
+		Vector3D(0.5f, 0.5f, 0.0f),
+		Vector3D(-0.5f, 0.5f, 0.0f),
+		Vector3D(-0.5f, -0.5f, 0.0f),
+		Vector3D(0.5f, -0.5f, 0.0f),
+	};
+	const uint NUM_LERP_POINTS = sizeof(lerpPoints) / sizeof(*lerpPoints);
+	uint sourceLerpPoint;
+	uint destinationLerpPoint;
+	float lerpAlpha;
+	Vector3D currentLerperPosition;
+
 	const uint NUM_SHIP_VERTS = sizeof(shipVerts) / sizeof(*shipVerts);
 	const uint NUM_BOUNDARY_VERTS = sizeof(boundaryVerts) / sizeof(*boundaryVerts);
 	GLuint shipVertexBufferID;
@@ -85,7 +98,6 @@ void MyGlWindow::doGl()
 	glViewport(0, 0, width(), height());
 
 	// Setup data pointers
-	glClear(GL_COLOR_BUFFER_BIT);
 	glBindBuffer(GL_ARRAY_BUFFER, shipVertexBufferID);
 
 	// Send data to OpenGL
@@ -106,6 +118,28 @@ void MyGlWindow::doGl()
 }
 
 
+void MyGlWindow::lerpTheLerper()
+{
+	lerpAlpha += clock1.lastLapTime();
+	if(lerpAlpha >= 1.0f)
+	{
+		lerpAlpha = 0.0f;
+		targetNextLerpPoint();
+	}
+	const Vector3D& source = lerpPoints[sourceLerpPoint];
+	const Vector3D& destination = lerpPoints[destinationLerpPoint];
+	currentLerperPosition = lerp(lerpAlpha, source, destination);
+}
+
+
+void  MyGlWindow::targetNextLerpPoint()
+{
+	sourceLerpPoint = destinationLerpPoint;
+	destinationLerpPoint = (destinationLerpPoint + 1) % NUM_LERP_POINTS;
+}
+
+
+
 
 void MyGlWindow::draw()
 {
@@ -121,17 +155,17 @@ void MyGlWindow::draw()
 	else
 		scale = Matrix2DH::scale(1, aspectRatio);
 
-	{
-	    PROFILE("Matrix Multiplication");
-	    op = translator * scale * rotator;
-	}
+    op = translator * scale * rotator;
+    for(uint i = 0; i < NUM_SHIP_VERTS; i++)
+        transformedVerts[i] = op * shipVerts[i];
 
-	{
-	    PROFILE("Transformation");
-	    for(uint i = 0; i < NUM_SHIP_VERTS; i++)
-            transformedVerts[i] = op * shipVerts[i];
-	}
-    doGl();
+    glClear(GL_COLOR_BUFFER_BIT);
+	doGl();
+	translator = Matrix2DH::translate(currentLerperPosition.x, currentLerperPosition.y);
+	op = translator * scale;
+	for(uint i = 0; i < NUM_SHIP_VERTS; i++)
+		transformedVerts[i] = op * shipVerts[i];
+	doGl();
 }
 
 
@@ -150,6 +184,7 @@ void MyGlWindow::update()
     oldShipPosition = shipPosition;
 	shipPosition += shipVelocity * clock1.lastLapTime();
 	handleBoundaries();
+	lerpTheLerper();
 }
 
 
@@ -173,6 +208,16 @@ bool MyGlWindow::initialize()
 	bool ret = true;
 	profiler.initialize("profiles.csv");
 	ret &= clock1.initialize();
+	if(NUM_LERP_POINTS > 1)
+	{
+		lerpAlpha = 0.0f;
+		destinationLerpPoint = 1;
+		targetNextLerpPoint();
+	}
+	else
+	{
+		ret = false;
+	}
 	return ret;
 }
 

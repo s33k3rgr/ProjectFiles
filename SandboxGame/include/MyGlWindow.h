@@ -14,12 +14,14 @@ protected:
 	void keyPressEvent(QKeyEvent*);
 private slots:
 	void myUpdate();
-	void UpdateVelocity();
-	void handleBoundaries();
 private:
     void update();
     void draw();
     void doGl();
+    void UpdateVelocity();
+	void handleBoundaries();
+    void lerpTheLerper();
+    void targetNextLerpPoint();
 public:
 	bool initialize();
 	bool shutdown();
