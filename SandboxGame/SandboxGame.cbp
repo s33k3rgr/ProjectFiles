@@ -55,6 +55,8 @@
 			<Add directory="/usr/lib" />
 			<Add directory="../Engine/bin/Debug" />
 		</Linker>
+		<Unit filename="MyGame.cpp" />
+		<Unit filename="MyGame.h" />
 		<Unit filename="include/MyGlWindow.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/MyGlWindow.cpp" />

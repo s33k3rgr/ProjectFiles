@@ -4,6 +4,7 @@
 namespace je
 {
 	typedef unsigned int uint;
+	typedef unsigned short ushort;
 }
 
 #endif

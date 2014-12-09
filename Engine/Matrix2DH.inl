@@ -1,13 +1,3 @@
-Matrix2DH::Matrix2DH(
-			float r0c0,float r0c1,float r0c2,
-			float r1c0,float r1c1,float r1c2) :
-			r0c0(r0c0), r0c1(r0c1), r0c2(r0c2),
-			r1c0(r1c0), r1c1(r1c1), r1c2(r1c2)
-{
-
-}
-
-
 Matrix2DH Matrix2DH::translate(float x, float y)
 {
 	return Matrix2DH(1, 0, x,

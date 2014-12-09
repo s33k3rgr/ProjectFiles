@@ -16,24 +16,19 @@
 			<Cursor1 position="4008" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="ClockTests.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="916" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="Matrix2DTests.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="319" topLine="8" />
-		</Cursor>
-	</File>
 	<File name="Vector3DTests.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4438" topLine="141" />
+			<Cursor1 position="3236" topLine="120" />
 		</Cursor>
 	</File>
 	<File name="Vector2DTests.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1193" topLine="34" />
+		</Cursor>
+	</File>
+	<File name="ClockTests.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="916" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="ProfileTests.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -44,5 +39,10 @@
 			<Collapse line="23" />
 			<Collapse line="38" />
 		</Folding>
+	</File>
+	<File name="Matrix2DTests.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="319" topLine="8" />
+		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
