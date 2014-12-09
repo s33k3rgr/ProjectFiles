@@ -5,6 +5,12 @@ Matrix2DH Matrix2DH::translate(float x, float y)
 }
 
 
+Matrix2DH Matrix2DH::translate(const Vector3D& position)
+{
+	return translate(position.x, position.y);
+}
+
+
 Matrix2DH Matrix2DH::scale(float x, float y)
 {
 	return Matrix2DH(x, 0, 0,

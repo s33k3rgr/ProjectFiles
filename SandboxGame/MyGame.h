@@ -2,7 +2,8 @@
 #define MY_GAME_H
 #include <QObject>
 #include <QTimer>
-//#include <Entity.h>
+#include <Entity.h>
+#include <RendererComponent.h>
 #include <Renderer.h>
 #include <Vector3D.h>
 namespace Rendering { class Renderable; }
@@ -10,7 +11,9 @@ namespace Rendering { class Renderable; }
 class MyGame : public QObject
 {
 	Q_OBJECT
-	//Entities::Entity ship;
+	Entities::Entity ship;
+	Entities::RendererComponent shipRenderer;
+
 	QTimer myTimer;
 	Rendering::Renderer renderer;
 	Rendering::Renderable* shipRenderable;

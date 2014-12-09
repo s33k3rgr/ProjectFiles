@@ -17,6 +17,7 @@ namespace Math
 
 		inline static Matrix2DH rotateZ(float angleInRadians);
 		inline static Matrix2DH translate(float x, float y);
+		inline static Matrix2DH translate(const Vector3D& position);
 		inline static Matrix2DH scale(float x, float y);
 	};
 

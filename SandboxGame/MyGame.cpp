@@ -35,7 +35,9 @@ bool MyGame::initialize()
 	shipRenderable =
 		renderer.addRenderable(shipGeometry);
 
-	//ship.addComponent(??
+	shipRenderer.setData(shipRenderable);
+
+	ship.addComponent(&shipRenderer);
 
 	/*Renderable* lerpInstance =
 		renderer.addRenderable(shipGeometry);*/
@@ -51,8 +53,7 @@ bool MyGame::shutdown()
 
 void MyGame::update()
 {
-	/*shipInstance->where = Matrix2DH::translate(shipPosition);
-	lerpInstance->where = Matrix2DH::translate(lerperPosition);*/
+	ship.update();
 	renderer.renderScene();
 }
 
