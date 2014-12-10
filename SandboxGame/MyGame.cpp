@@ -36,8 +36,13 @@ bool MyGame::initialize()
 		renderer.addRenderable(shipGeometry);
 
 	shipRenderer.setData(shipRenderable);
-
 	ship.addComponent(&shipRenderer);
+
+	shipPhysics.velocity.x = 0.001f;
+	ship.addComponent(&shipPhysics);
+
+	if(!ship.initialize())
+		return false;
 
 	/*Renderable* lerpInstance =
 		renderer.addRenderable(shipGeometry);*/

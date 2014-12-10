@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <Entity.h>
 #include <RendererComponent.h>
+#include <PhysicsComponent.h>
 #include <Renderer.h>
 #include <Vector3D.h>
 namespace Rendering { class Renderable; }
@@ -13,6 +14,7 @@ class MyGame : public QObject
 	Q_OBJECT
 	Entities::Entity ship;
 	Entities::RendererComponent shipRenderer;
+	Entities::PhysicsComponent shipPhysics;
 
 	QTimer myTimer;
 	Rendering::Renderer renderer;

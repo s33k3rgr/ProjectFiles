@@ -57,6 +57,10 @@
 		</Linker>
 		<Unit filename="MyGame.cpp" />
 		<Unit filename="MyGame.h" />
+		<Unit filename="MyGame_moc.cpp" />
+		<Unit filename="MyKeyMapper.cpp" />
+		<Unit filename="MyKeyMapper.h" />
+		<Unit filename="MyMenuChoice.h" />
 		<Unit filename="include/MyGlWindow.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/MyGlWindow.cpp" />
